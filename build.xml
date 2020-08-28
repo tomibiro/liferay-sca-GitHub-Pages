@@ -43,13 +43,25 @@
 	</target>
 
 	<target name="find">
-		<java
-			classname="com.liferay.sca.DependencyFinder"
-			classpath="classes"
-			classpathref="lib.classpath"
-		>
-			<arg value="${project}" />
-		</java>
+		<if>
+			<isset property="project" />
+			<then>
+				<java
+					classname="com.liferay.sca.DependencyFinder"
+					classpath="classes"
+					classpathref="lib.classpath"
+				>
+					<arg value="${project}" />
+				</java>
+			</then>
+			<else>
+				<java
+					classname="com.liferay.sca.DependencyFinder"
+					classpath="classes"
+					classpathref="lib.classpath"
+				/>
+			</else>
+		</if>
 	</target>
 
 	<target name="help">
