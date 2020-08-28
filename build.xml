@@ -53,6 +53,6 @@
 	</target>
 
 	<target name="help">
-		<echo message="Usage: ant find -D&lt;project&gt;" level="info" />
+		<echo message="Usage: ant find [-D&lt;project&gt;]" level="info" />
 	</target>
 </project>
