@@ -1,6 +1,8 @@
 package com.liferay.sca;
 
 import com.liferay.sca.exception.ProjectNotConfiguredException;
+import com.liferay.sca.model.Dependency;
+import com.liferay.sca.model.Package;
 import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.PropsKeys;
 import com.liferay.sca.util.PropsUtil;
@@ -22,18 +24,18 @@ public class DependencyFinder {
 		}
 	}
 
-	public static void find() throws ProjectNotConfiguredException {
+	public static void find() throws Exception {
 		for (String project : PropsValues.PROJECTS) {
 			find(project);
 		}
 	}
 
-	public static void find(String project)
-		throws ProjectNotConfiguredException {
-
+	public static void find(String project) throws Exception {
 		if (!ArrayUtil.contains(PropsValues.PROJECTS, project)) {
 			throw new ProjectNotConfiguredException(project);
 		}
+
+		Set<Dependency> dependencies = new HashSet<Dependency>();
 
 		File srcCodeFile = new File(
 			PropsUtil.get(project + "." + PropsKeys.SRC_CODE));
@@ -41,7 +43,9 @@ public class DependencyFinder {
 		Set<File> packageFiles = findPackageFiles(srcCodeFile);
 
 		for (File file : packageFiles) {
-			System.out.println(file.getPath());
+			Package packageObj = Package.load(file);
+
+			dependencies.addAll(packageObj.getDependencies());
 		}
 	}
 
