@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<project name="liferay-sca" default="help" basedir=".">
+	<property name="project.dir" value="." />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${project.dir}/lib/ant-contrib.jar" />
+		</classpath>
+	</taskdef>
+
+	<path id="lib.classpath">
+		<fileset dir="${project.dir}/lib" includes="*.jar" />
+	</path>
+
+	<target name="clean">
+		<available property="classes.dir.present" file="${project.dir}/classes" type="dir" />
+
+		<if>
+			<equals arg1="${classes.dir.present}" arg2="true" />
+			<then>
+				<delete includeemptydirs="true">
+					<fileset dir="${project.dir}/classes" includes="**/*" />
+				</delete>
+			</then>
+			<else>
+				<mkdir dir="${project.dir}/classes" />
+			</else>
+		</if>
+	</target>
+
+	<target name="compile" depends="clean">
+		<javac
+			classpath="${project.dir}/classes"
+			classpathref="lib.classpath"
+			debug="on"
+			debuglevel="lines,vars,source"
+			destdir="${project.dir}/classes"
+			encoding="UTF-8"
+			includeAntRuntime="false"
+			srcdir="${project.dir}/src"
+		/>
+	</target>
+
+	<target name="find">
+		<java
+			classname="com.liferay.sca.DependencyFinder"
+			classpath="classes"
+			classpathref="lib.classpath"
+		>
+			<arg value="${project}" />
+		</java>
+	</target>
+
+	<target name="help">
+		<echo message="Usage: ant find -D&lt;project&gt;" level="info" />
+	</target>
+</project>
