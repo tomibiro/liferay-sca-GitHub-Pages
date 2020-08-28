@@ -1,5 +1,6 @@
 package com.liferay.sca;
 
+import com.liferay.sca.comparator.DependencyComparator;
 import com.liferay.sca.exception.ProjectNotConfiguredException;
 import com.liferay.sca.model.Dependency;
 import com.liferay.sca.model.Package;
@@ -12,6 +13,7 @@ import java.io.File;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class DependencyFinder {
 
@@ -35,7 +37,8 @@ public class DependencyFinder {
 			throw new ProjectNotConfiguredException(project);
 		}
 
-		Set<Dependency> dependencies = new HashSet<Dependency>();
+		Set<Dependency> dependencies = new TreeSet<Dependency>(
+			new DependencyComparator());
 
 		File srcCodeFile = new File(
 			PropsUtil.get(project + "." + PropsKeys.SRC_CODE));
