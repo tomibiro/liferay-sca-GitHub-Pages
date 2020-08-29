@@ -2,11 +2,10 @@ package com.liferay.sca.model;
 
 import com.liferay.sca.comparator.DependencyComparator;
 import com.liferay.sca.exception.ProjectNotConfiguredException;
-import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.FileUtil;
+import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
 import com.liferay.sca.util.PropsUtil;
-import com.liferay.sca.util.PropsValues;
 
 import java.io.IOException;
 
@@ -20,9 +19,7 @@ public class Report {
 	}
 
 	public void save() throws IOException, ProjectNotConfiguredException {
-		if (!ArrayUtil.contains(PropsValues.PROJECTS, _project)) {
-			throw new ProjectNotConfiguredException(_project);
-		}
+		ProjectUtil.validate(_project);
 
 		StringBuilder sb = new StringBuilder();
 

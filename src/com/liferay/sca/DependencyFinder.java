@@ -1,12 +1,10 @@
 package com.liferay.sca;
 
-import com.liferay.sca.comparator.DependencyComparator;
-import com.liferay.sca.exception.ProjectNotConfiguredException;
 import com.liferay.sca.model.Dependency;
 import com.liferay.sca.model.Package;
 import com.liferay.sca.model.Report;
-import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.FileUtil;
+import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
 import com.liferay.sca.util.PropsUtil;
 import com.liferay.sca.util.PropsValues;
@@ -16,7 +14,6 @@ import java.io.IOException;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class DependencyFinder {
 
@@ -36,9 +33,7 @@ public class DependencyFinder {
 	}
 
 	public static void find(String project) throws Exception {
-		if (!ArrayUtil.contains(PropsValues.PROJECTS, project)) {
-			throw new ProjectNotConfiguredException(project);
-		}
+		ProjectUtil.validate(project);
 
 		Report report = new Report();
 
