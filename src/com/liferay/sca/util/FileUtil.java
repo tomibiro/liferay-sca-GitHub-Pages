@@ -43,13 +43,13 @@ public class FileUtil {
 	public static void write(String content, File file)
 		throws IOException {
 
-		write(content, file.getAbsolutePath());
-	}
+		File parent = file.getParentFile();
 
-	public static void write(String content, String filename)
-		throws IOException {
+		if (!parent.exists()) {
+			parent.mkdirs();
+		}
 
-		Writer out = new PrintWriter(filename, UTF8);
+		Writer out = new PrintWriter(file, UTF8);
 
 		try {
 			out.write(content);
@@ -57,6 +57,12 @@ public class FileUtil {
 		finally {
 			out.close();
 		}
+	}
+
+	public static void write(String content, String filename)
+		throws IOException {
+
+		write(content, new File(filename));
 	}
 
 	protected static String UTF8 = "UTF-8";
