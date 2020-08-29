@@ -4,6 +4,7 @@ import com.liferay.sca.comparator.DependencyComparator;
 import com.liferay.sca.exception.ProjectNotConfiguredException;
 import com.liferay.sca.model.Dependency;
 import com.liferay.sca.model.Package;
+import com.liferay.sca.model.Report;
 import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.FileUtil;
 import com.liferay.sca.util.PropsKeys;
@@ -39,8 +40,9 @@ public class DependencyFinder {
 			throw new ProjectNotConfiguredException(project);
 		}
 
-		Set<Dependency> dependencies = new TreeSet<Dependency>(
-			new DependencyComparator());
+		Report report = new Report();
+
+		report.setProject(project);
 
 		File srcCodeFile = new File(
 			PropsUtil.get(project + "." + PropsKeys.SRC_CODE));
@@ -50,10 +52,10 @@ public class DependencyFinder {
 		for (File file : packageFiles) {
 			Package packageObj = Package.load(file);
 
-			dependencies.addAll(packageObj.getDependencies());
+			report.add(packageObj.getDependencies());
 		}
 
-		save(project, dependencies);
+		report.save();
 	}
 
 	protected static Set<File> findPackageFiles(File srcCodeFile) {
