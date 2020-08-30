@@ -4,9 +4,9 @@ import com.liferay.sca.comparator.DependencyComparator;
 import com.liferay.sca.exception.ParseException;
 import com.liferay.sca.exception.ProjectNotConfiguredException;
 import com.liferay.sca.util.FileUtil;
+import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
-import com.liferay.sca.util.PropsUtil;
 
 import java.io.IOException;
 import java.io.File;
@@ -45,7 +45,7 @@ public class Report {
 		ProjectUtil.validate(project);
 
 		File file = new File(
-			PropsUtil.get(project + "." + PropsKeys.DEPENDENCIES_REPORT));
+			ProjectPropsUtil.get(project, PropsKeys.DEPENDENCIES_REPORT));
 
 		Report report = load(file);
 
@@ -78,7 +78,7 @@ public class Report {
 
 		FileUtil.write(
 			sb.toString(),
-			PropsUtil.get(_project + "." + PropsKeys.DEPENDENCIES_REPORT));
+			ProjectPropsUtil.get(_project, PropsKeys.DEPENDENCIES_REPORT));
 	}
 
 	public void setProject(String project) {

@@ -3,9 +3,9 @@ package com.liferay.sca;
 import com.liferay.sca.model.Dependency;
 import com.liferay.sca.model.Report;
 import com.liferay.sca.util.FileUtil;
+import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
-import com.liferay.sca.util.PropsUtil;
 import com.liferay.sca.util.PropsValues;
 
 import java.io.IOException;
@@ -50,8 +50,8 @@ public class ComboPOM {
 	}
 
 	protected static void save(String project, String content) throws IOException {
-		String folder = PropsUtil.get(
-			project + "." + PropsKeys.DEPENDABOT_PACKAGE_DIR);
+		String folder = ProjectPropsUtil.get(
+			project, PropsKeys.DEPENDABOT_PACKAGE_DIR);
 
 		String path = folder + "/pom.xml";
 

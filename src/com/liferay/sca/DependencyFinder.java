@@ -2,9 +2,9 @@ package com.liferay.sca;
 
 import com.liferay.sca.model.Package;
 import com.liferay.sca.model.Report;
+import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
-import com.liferay.sca.util.PropsUtil;
 import com.liferay.sca.util.PropsValues;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public class DependencyFinder {
 		report.setProject(project);
 
 		File srcCodeFile = new File(
-			PropsUtil.get(project + "." + PropsKeys.SRC_CODE));
+			ProjectPropsUtil.get(project, PropsKeys.SRC_CODE));
 
 		Set<File> packageFiles = findPackageFiles(srcCodeFile);
 
