@@ -16,8 +16,12 @@ public abstract class Package {
 			return new GradlePackage(file);
 		}
 
-		if (path.endsWith(".properties")) {
+		if (path.endsWith("dependencies.properties")) {
 			return new PropertiesPackage(file);
+		}
+
+		if (path.endsWith("ivy.xml")) {
+			return new IvyPackage(file);
 		}
 
 		throw new UnknownPackageTypeException(path);

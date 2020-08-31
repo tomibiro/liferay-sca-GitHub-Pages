@@ -119,7 +119,7 @@ public class GradlePackage extends Package {
 			addDependency(group, artifact, version);
 		}
 		catch (ParseException pe) {
-			pe.printStackTrace();
+			System.err.println(pe.getMessage());
 		}
 	}
 
