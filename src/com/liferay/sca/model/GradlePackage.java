@@ -2,6 +2,7 @@ package com.liferay.sca.model;
 
 import com.liferay.sca.exception.ParseException;
 import com.liferay.sca.util.FileUtil;
+import com.liferay.sca.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -95,6 +96,8 @@ public class GradlePackage extends Package {
 		try {
 			String content = FileUtil.read(file);
 
+			content = _replaceVariables(content);
+			
 			List<String> dependencySections = _findDependencySections(content);
 
 			for (String dependencySection : dependencySections) {
@@ -135,6 +138,30 @@ public class GradlePackage extends Package {
 
 			_parseDependencyLine(line);
 		}
+	}
+
+	private String _replaceVariables(String content) {
+		for (String variable : PropsValues.GRADLE_VARIABLES) {
+			content = _replaceVariable(content, variable);
+		}
+
+		return content;
+	}
+
+	private String _replaceVariable(String content, String variable) {
+		int x = content.indexOf("String " + variable + " =");
+
+		if (x < 0) {
+			return content;
+		}
+
+		int y = content.indexOf("\"", x);
+
+		int z = content.indexOf("\"", y+1);
+
+		String value = content.substring(y, z+1);
+
+		return content.replaceAll(": " + variable, ": " + value);
 	}
 
 	private static final String _DEPENDENCY_END = "}";
