@@ -15,7 +15,7 @@ public class IvyPackage extends Package {
 		_parse(file);
 	}
 
-	private String _findDependenciesSection(String content)
+	private String _findDependenciesSection(String content, File file)
 		throws ParseException {
 
 		int x = content.indexOf(_DEPENDENCIES_START);
@@ -31,13 +31,14 @@ public class IvyPackage extends Package {
 		int z = content.indexOf(_DEPENDENCIES_END, y);
 
 		if (z < 0) {
-			throw new ParseException(content.substring(y, y+80));
+			throw new ParseException(content.substring(y, y+80), file);
 		}
 
 		return content.substring(y, z);
 	}
 
-	private List<String> _findDependencyXmls(String dependenciesSection)
+	private List<String> _findDependencyXmls(
+			String dependenciesSection, File file)
 		throws ParseException {
 
 		List<String> dependencyXmls = new ArrayList<String>();
@@ -55,7 +56,7 @@ public class IvyPackage extends Package {
 
 			if (z < 0) {
 				throw new ParseException(
-					dependenciesSection.substring(y, y+80));
+					dependenciesSection.substring(y, y+80), file);
 			}
 
 			z = z + _DEPENDENCY_END.length();
@@ -68,40 +69,40 @@ public class IvyPackage extends Package {
 		return dependencyXmls;
 	}
 
-	private String _getAttribute(String dependencyXml, String attribute)
-			throws ParseException {
+	private String _getAttribute(
+			String dependencyXml, String attribute, File file)
+		throws ParseException {
 
-			String attributeStart = attribute + "=\"";
+		String attributeStart = attribute + "=\"";
 
-			int x = dependencyXml.indexOf(attributeStart);
+		int x = dependencyXml.indexOf(attributeStart);
 
-			if (x < 0) {
-				throw new ParseException(
-					"No " + attribute + " defined: " + dependencyXml);
-			}
-
-			x = x + attributeStart.length();
-
-			int y = dependencyXml.indexOf("\"", x);
-
-			if (y < 0) {
-				throw new ParseException("Near: " + dependencyXml);
-			}
-
-			return dependencyXml.substring(x, y);
+		if (x < 0) {
+			throw new ParseException(dependencyXml, file);
 		}
+
+		x = x + attributeStart.length();
+
+		int y = dependencyXml.indexOf("\"", x);
+
+		if (y < 0) {
+			throw new ParseException(dependencyXml, file);
+		}
+
+		return dependencyXml.substring(x, y);
+	}
 
 	private void _parse(File file) {
 		try {
 			String content = FileUtil.read(file);
 
-			String dependenciesSection = _findDependenciesSection(content);
+			String dependenciesSection = _findDependenciesSection(content, file);
 
 			List<String> dependencyXmls = _findDependencyXmls(
-				dependenciesSection);
+				dependenciesSection, file);
 
 			for (String dependencyXml : dependencyXmls) {
-				_parseDependencyXml(dependencyXml);
+				_parseDependencyXml(dependencyXml, file);
 			}
 		}
 		catch (IOException ioe) {
@@ -112,11 +113,11 @@ public class IvyPackage extends Package {
 		}
 	}
 
-	private void _parseDependencyXml(String dependencyXml) {
+	private void _parseDependencyXml(String dependencyXml, File file) {
 		try {
-			String name = _getAttribute(dependencyXml, "name");
-			String org = _getAttribute(dependencyXml, "org");
-			String rev = _getAttribute(dependencyXml, "rev");
+			String name = _getAttribute(dependencyXml, "name", file);
+			String org = _getAttribute(dependencyXml, "org", file);
+			String rev = _getAttribute(dependencyXml, "rev", file);
 
 			addDependency(org, name, rev);
 		}

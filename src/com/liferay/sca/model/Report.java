@@ -29,7 +29,7 @@ public class Report {
 			String[] parts = line.split(":");
 
 			if (parts.length != 3) {
-				throw new ParseException(line);
+				throw new ParseException(line, file);
 			}
 
 			Dependency dependency = new Dependency(

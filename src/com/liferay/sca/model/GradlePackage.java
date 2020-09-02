@@ -16,7 +16,7 @@ public class GradlePackage extends Package {
 		_parse(file);
 	}
 
-	private List<String> _findDependencySections(String content) {
+	private List<String> _findDependencySections(String content, File file) {
 		List<String> dependencySections = new ArrayList<String>();
 
 		int x = 0;
@@ -32,9 +32,13 @@ public class GradlePackage extends Package {
 
 			int z = content.indexOf(_DEPENDENCY_END, y);
 
-			if (z < 0) {
-				System.err.println(
-					"Parse error near: " + content.substring(y, y+80));
+			try {
+				if (z < 0) {
+					throw new ParseException(content.substring(y, y+80), file);
+				}
+			}
+			catch (ParseException pe) {
+				pe.printStackTrace();
 
 				break;
 			}
@@ -47,14 +51,13 @@ public class GradlePackage extends Package {
 		return dependencySections;
 	}
 
-	private String _getProperty(String dependencyLine, String property)
+	private String _getProperty(String dependencyLine, String property, File file)
 		throws ParseException {
 
 		int x = dependencyLine.indexOf(property + ":");
 
 		if (x < 0) {
-			throw new ParseException(
-				"No " + property + " defined: " + dependencyLine);
+			return null;
 		}
 
 		x = dependencyLine.indexOf("\"", x) + 1;
@@ -62,34 +65,10 @@ public class GradlePackage extends Package {
 		int y = dependencyLine.indexOf("\"", x);
 
 		if (y < 0) {
-			throw new ParseException("Near: " + dependencyLine);
+			throw new ParseException(dependencyLine, file);
 		}
 
 		return dependencyLine.substring(x, y);
-	}
-
-	private boolean _ignore(String line) {
-		if (line.indexOf("fileTree(") >= 0) {
-			return true;
-		}
-
-		if (line.indexOf("if (") >= 0) {
-			return true;
-		}
-
-		if (line.indexOf("project (") >= 0) {
-			return true;
-		}
-
-		if (line.indexOf("project(") >= 0) {
-			return true;
-		}
-
-		if (line.indexOf("rootProject.files(") >= 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _parse(File file) {
@@ -97,11 +76,12 @@ public class GradlePackage extends Package {
 			String content = FileUtil.read(file);
 
 			content = _replaceVariables(content);
-			
-			List<String> dependencySections = _findDependencySections(content);
+
+			List<String> dependencySections = _findDependencySections(
+				content, file);
 
 			for (String dependencySection : dependencySections) {
-				_parseDependencySection(dependencySection);
+				_parseDependencySection(dependencySection, file);
 			}
 		}
 		catch (IOException ioe) {
@@ -109,24 +89,22 @@ public class GradlePackage extends Package {
 		}
 	}
 
-	private void _parseDependencyLine(String line) {
-		if (_ignore(line)) {
-			return;
-		}
-
+	private void _parseDependencyLine(String line, File file) {
 		try {
-			String group = _getProperty(line, "group");
-			String artifact = _getProperty(line, "name");
-			String version = _getProperty(line, "version");
+			String group = _getProperty(line, "group", file);
+			String artifact = _getProperty(line, "name", file);
+			String version = _getProperty(line, "version", file);
 
-			addDependency(group, artifact, version);
+			if ((group != null) && (artifact != null) && (version != null)) {
+				addDependency(group, artifact, version);
+			}
 		}
 		catch (ParseException pe) {
-			System.err.println(pe.getMessage());
+			pe.printStackTrace();
 		}
 	}
 
-	private void _parseDependencySection(String section) {
+	private void _parseDependencySection(String section, File file) {
 		String[] lines = section.split("\\n");
 
 		for (String line : lines) {
@@ -136,7 +114,7 @@ public class GradlePackage extends Package {
 				continue;
 			}
 
-			_parseDependencyLine(line);
+			_parseDependencyLine(line, file);
 		}
 	}
 
