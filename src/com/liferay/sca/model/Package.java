@@ -9,7 +9,7 @@ import java.util.Set;
 
 public abstract class Package {
 
-	public static Package load(File file) throws UnknownPackageTypeException {
+	public static Package load(File file) throws Exception {
 		String path = file.getPath();
 
 		if (path.endsWith(".gradle")) {
