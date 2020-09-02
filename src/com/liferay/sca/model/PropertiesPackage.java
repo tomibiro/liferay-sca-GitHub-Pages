@@ -1,37 +1,30 @@
 package com.liferay.sca.model;
 
-import com.liferay.sca.util.FileUtil;
+import com.liferay.sca.exception.ParseException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+
+import java.util.Properties;
 
 public class PropertiesPackage extends Package {
 
 	public PropertiesPackage(File file) {
-		_parse(file);
-	}
-
-	private void _parse(File file) {
 		try {
-			String content = FileUtil.read(file);
+			Properties properties = new Properties();
 
-			String[] lines = content.split("\\n");
+			properties.load(new FileInputStream(file));
 
-			for (String line : lines) {
-				line = line.trim();
+			for (Object valueyObj : properties.values()) {
+				String value = (String)valueyObj;
 
-				int x = line.indexOf("=");
+				String[] parts = value.split(":");
 
-				if (x < 0) {
-					continue;
-				}
+				if (parts.length < 3) {
+					ParseException pe = new ParseException(value, file);
 
-				String dependencyString = line.substring(x+1);
-
-				String[] parts = dependencyString.split(":");
-
-				if (parts.length <3) {
-					System.err.println("Parse error near: " + line);
+					pe.printStackTrace();
 
 					continue;
 				}
