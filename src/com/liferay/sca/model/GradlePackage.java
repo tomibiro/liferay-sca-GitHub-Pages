@@ -90,6 +90,8 @@ public class GradlePackage extends Package {
 	}
 
 	private void _parseDependencyLine(String line, File file) {
+		line = line.replace('\'', '"');
+
 		try {
 			String group = _getProperty(line, "group", file);
 			String artifact = _getProperty(line, "name", file);
