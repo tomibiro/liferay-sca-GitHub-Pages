@@ -32,12 +32,10 @@ public class GradlePackage extends Package {
 
 			int z = content.indexOf(_DEPENDENCY_END, y);
 
-			try {
-				if (z < 0) {
-					throw new ParseException(content.substring(y, y+80), file);
-				}
-			}
-			catch (ParseException pe) {
+			if (z < 0) {
+				ParseException pe = new ParseException(
+					content.substring(y, y+80), file);
+
 				pe.printStackTrace();
 
 				break;
