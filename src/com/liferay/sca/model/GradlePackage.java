@@ -125,7 +125,22 @@ public class GradlePackage extends Package {
 			content = _replaceVariable(content, variable);
 		}
 
-		return content;
+		while (true) {
+			int x = content.indexOf("${");
+
+			if (x < 0) {
+				return content;
+			}
+
+			int y = content.indexOf("}", x);
+
+			if (y < 0) {
+				return content;
+			}
+
+			content = content.substring(0, x) + content.substring(x+2, y) + 
+				content.substring(y+1);
+		}
 	}
 
 	private String _replaceVariable(String content, String variable) {
