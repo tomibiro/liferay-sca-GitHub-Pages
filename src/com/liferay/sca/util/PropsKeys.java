@@ -6,6 +6,9 @@ public interface PropsKeys {
 
 	public static final String DEPENDENCIES_REPORT = "dependencies.report";
 
+	public static final String GRADLE_PROJECT_TEMPLATE_TOKEN_FILE =
+		"gradle.project.template.token.file";
+
 	public static final String GRADLE_VARIABLES = "gradle.variables";
 
 	public static final String PACKAGE_FILENAMES = "package.filenames";

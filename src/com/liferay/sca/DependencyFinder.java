@@ -42,7 +42,7 @@ public class DependencyFinder {
 		Set<File> packageFiles = findPackageFiles(srcCodeFile);
 
 		for (File file : packageFiles) {
-			Package packageObj = Package.load(file);
+			Package packageObj = Package.load(project, file);
 
 			report.add(packageObj.getDependencies());
 		}

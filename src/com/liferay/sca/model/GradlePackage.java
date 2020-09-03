@@ -9,11 +9,12 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GradlePackage extends Package {
 
-	public GradlePackage(File file) {
-		_parse(file);
+	public GradlePackage(String project, File file) {
+		_parse(project, file);
 	}
 
 	private List<String> _findDependencySections(String content, File file) {
@@ -69,11 +70,11 @@ public class GradlePackage extends Package {
 		return dependencyLine.substring(x, y);
 	}
 
-	private void _parse(File file) {
+	private void _parse(String project, File file) {
 		try {
 			String content = FileUtil.read(file);
 
-			content = _replaceVariables(content);
+			content = _replaceVariables(project, content);
 
 			List<String> dependencySections = _findDependencySections(
 				content, file);
@@ -118,27 +119,45 @@ public class GradlePackage extends Package {
 		}
 	}
 
-	private String _replaceVariables(String content) {
+	private String _replaceVariables(String project, String content)
+		throws IOException {
+
+		// In file variables
+
 		for (String variable : PropsValues.GRADLE_VARIABLES) {
 			content = _replaceVariable(content, variable);
 		}
+
+		// ${foo} style variables
 
 		while (true) {
 			int x = content.indexOf("${");
 
 			if (x < 0) {
-				return content;
+				break;
 			}
 
 			int y = content.indexOf("}", x);
 
 			if (y < 0) {
-				return content;
+				break;
 			}
 
 			content = content.substring(0, x) + content.substring(x+2, y) + 
 				content.substring(y+1);
 		}
+
+		// @foo@ style variables
+
+		Map<String,String> projectTemplateTokens = getProjectTemplateTokens(
+			project);
+
+		for (String key : projectTemplateTokens.keySet()) {
+			content = content.replaceAll(
+				"@" + key + "@", projectTemplateTokens.get(key));
+		}
+
+		return content;
 	}
 
 	private String _replaceVariable(String content, String variable) {
