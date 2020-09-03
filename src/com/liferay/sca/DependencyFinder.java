@@ -2,6 +2,7 @@ package com.liferay.sca;
 
 import com.liferay.sca.model.Package;
 import com.liferay.sca.model.Report;
+import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
@@ -63,7 +64,12 @@ public class DependencyFinder {
 
 		for (File file : files) {
 			if (file.isDirectory()) {
-				_findPackageFiles(file, packageFiles);
+				boolean isIgnoredFolder = ArrayUtil.contains(
+					PropsValues.IGNORED_FOLDERS, file.getName());
+
+				if (!isIgnoredFolder) {
+					_findPackageFiles(file, packageFiles);
+				}
 
 				continue;
 			}

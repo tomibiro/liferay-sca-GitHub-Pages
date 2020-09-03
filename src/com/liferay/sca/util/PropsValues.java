@@ -8,6 +8,9 @@ public interface PropsValues {
 	public static final String[] GRADLE_VARIABLES = PropsUtil.getArray(
 		PropsKeys.GRADLE_VARIABLES);
 
+	public static final String[] IGNORED_FOLDERS = PropsUtil.getArray(
+		PropsKeys.IGNORED_FOLDERS);
+
 	public static final String[] PACKAGE_FILENAMES = PropsUtil.getArray(
 		PropsKeys.PACKAGE_FILENAMES);
 
