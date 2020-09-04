@@ -1,5 +1,6 @@
 package com.liferay.sca;
 
+import com.liferay.sca.exception.BlankXmlException;
 import com.liferay.sca.model.Package;
 import com.liferay.sca.model.Report;
 import com.liferay.sca.util.ArrayUtil;
@@ -43,9 +44,13 @@ public class DependencyFinder {
 		Set<File> packageFiles = findPackageFiles(srcCodeFile);
 
 		for (File file : packageFiles) {
-			Package packageObj = Package.load(project, file);
+			try {
+				Package packageObj = Package.load(project, file);
 
-			report.add(packageObj.getDependencies());
+				report.add(packageObj.getDependencies());
+			}
+			catch (BlankXmlException bxe) {
+			}
 		}
 
 		report.save();

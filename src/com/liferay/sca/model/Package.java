@@ -34,6 +34,10 @@ public abstract class Package {
 			return new IvyPackage(file);
 		}
 
+		if (path.endsWith("pom.xml")) {
+			return new PomPackage(project, file);
+		}
+
 		throw new UnknownPackageTypeException(path);
 	}
 
