@@ -73,7 +73,7 @@
 			<isset property="project" />
 			<then>
 				<java
-					classname="com.liferay.sca.ComboPOM"
+					classname="com.liferay.sca.ComboPom"
 					classpath="classes"
 					classpathref="lib.classpath"
 				>
@@ -82,7 +82,7 @@
 			</then>
 			<else>
 				<java
-					classname="com.liferay.sca.ComboPOM"
+					classname="com.liferay.sca.ComboPom"
 					classpath="classes"
 					classpathref="lib.classpath"
 				/>

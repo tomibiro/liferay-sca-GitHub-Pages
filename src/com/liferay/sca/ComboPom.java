@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import java.util.Set;
 
-public class ComboPOM {
+public class ComboPom {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length == 0) {
