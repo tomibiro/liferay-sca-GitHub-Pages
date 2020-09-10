@@ -1,6 +1,6 @@
 package com.liferay.sca.model.maven;
 
-import com.liferay.sca.comparator.DependencyComparator;
+import com.liferay.sca.comparator.MavenDependencyComparator;
 import com.liferay.sca.exception.ParseException;
 import com.liferay.sca.exception.ProjectNotConfiguredException;
 import com.liferay.sca.util.FileUtil;
@@ -14,10 +14,10 @@ import java.io.File;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Report {
+public class MavenReport {
 
-	public static Report load(File file) throws Exception {
-		Report report = new Report();
+	public static MavenReport load(File file) throws Exception {
+		MavenReport report = new MavenReport();
 
 		String content = FileUtil.read(file);
 
@@ -32,7 +32,7 @@ public class Report {
 				throw new ParseException(line, file);
 			}
 
-			Dependency dependency = new Dependency(
+			MavenDependency dependency = new MavenDependency(
 				parts[0], parts[1], parts[2]);
 
 			report.add(dependency);
@@ -41,28 +41,28 @@ public class Report {
 		return report;
 	}
 
-	public static Report load(String project) throws Exception {
+	public static MavenReport load(String project) throws Exception {
 		ProjectUtil.validate(project);
 
 		File file = new File(
 			ProjectPropsUtil.get(project, PropsKeys.DEPENDENCIES_REPORT));
 
-		Report report = load(file);
+		MavenReport report = load(file);
 
 		report.setProject(project);
 
 		return report;
 	}
 
-	public void add(Dependency dependency) {
+	public void add(MavenDependency dependency) {
 		_dependencies.add(dependency);
 	}
 
-	public void add(Set<Dependency> dependencies) {
+	public void add(Set<MavenDependency> dependencies) {
 		_dependencies.addAll(dependencies);
 	}
 
-	public Set<Dependency> getDependencies() {
+	public Set<MavenDependency> getDependencies() {
 		return _dependencies;
 	}
 
@@ -71,7 +71,7 @@ public class Report {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (Dependency dependency : _dependencies) {
+		for (MavenDependency dependency : _dependencies) {
 			sb.append(dependency.toString());
 			sb.append("\n");
 		}
@@ -85,8 +85,8 @@ public class Report {
 		_project = project;
 	}
 
-	Set<Dependency> _dependencies = new TreeSet<Dependency>(
-		new DependencyComparator());
+	Set<MavenDependency> _dependencies = new TreeSet<MavenDependency>(
+		new MavenDependencyComparator());
 
 	String _project;
 

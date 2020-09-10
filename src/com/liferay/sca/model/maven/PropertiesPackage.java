@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import java.util.Properties;
 
-public class PropertiesPackage extends Package {
+public class PropertiesPackage extends MavenPackage {
 
 	public PropertiesPackage(File file) {
 		try {

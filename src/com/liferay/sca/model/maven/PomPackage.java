@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class PomPackage extends Package {
+public class PomPackage extends MavenPackage {
 
 	public PomPackage(String project, File file) throws Exception {
 		if (_isBlank(file)) {

@@ -1,7 +1,7 @@
 package com.liferay.sca;
 
-import com.liferay.sca.model.maven.Dependency;
-import com.liferay.sca.model.maven.Report;
+import com.liferay.sca.model.maven.MavenDependency;
+import com.liferay.sca.model.maven.MavenReport;
 import com.liferay.sca.util.FileUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;
@@ -36,11 +36,11 @@ public class ComboPom {
 
 		_addHeader(sb, project);
 
-		Report report = Report.load(project);
+		MavenReport report = MavenReport.load(project);
 
-		Set<Dependency> dependencies = report.getDependencies();
+		Set<MavenDependency> dependencies = report.getDependencies();
 
-		for (Dependency dependency : dependencies) {
+		for (MavenDependency dependency : dependencies) {
 			_addDependency(sb, dependency);
 		}
 
@@ -58,7 +58,9 @@ public class ComboPom {
 		FileUtil.write(content, path);
 	}
 
-	private static void _addDependency(StringBuilder sb, Dependency dependency) {
+	private static void _addDependency(
+		StringBuilder sb, MavenDependency dependency) {
+
 		sb.append("\t\t<dependency>\n");
 		sb.append("\t\t\t<groupId>");
 		sb.append(dependency.getGroup());

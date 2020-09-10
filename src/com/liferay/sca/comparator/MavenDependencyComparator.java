@@ -1,12 +1,14 @@
 package com.liferay.sca.comparator;
 
-import com.liferay.sca.model.maven.Dependency;
+import com.liferay.sca.model.maven.MavenDependency;
 
 import java.util.Comparator;
 
-public class DependencyComparator implements Comparator<Dependency>{
+public class MavenDependencyComparator implements Comparator<MavenDependency>{
 
-	public int compare(Dependency dependency1, Dependency dependency2) {
+	public int compare(
+		MavenDependency dependency1, MavenDependency dependency2) {
+
 		String group1 = dependency1.getGroup();
 		String group2 = dependency2.getGroup();
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GradlePackage extends Package {
+public class GradlePackage extends MavenPackage {
 
 	public GradlePackage(String project, File file) {
 		_parse(project, file);

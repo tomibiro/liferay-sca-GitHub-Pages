@@ -1,14 +1,14 @@
 package com.liferay.sca.model.maven;
 
-public class Dependency {
+public class MavenDependency {
 
-	public Dependency(String group, String artifact, String version) {
+	public MavenDependency(String group, String artifact, String version) {
 		_group = group;
 		_artifact = artifact;
 		_version = version;
 	}
 
-	public boolean equals(Dependency d2) {
+	public boolean equals(MavenDependency d2) {
 		if (!_group.equals(d2.getGroup())) {
 			return false;
 		}

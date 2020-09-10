@@ -15,9 +15,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class Package {
+public abstract class MavenPackage {
 
-	public static Package load(String project, File file) throws Exception {
+	public static MavenPackage load(String project, File file)
+		throws Exception {
+
 		getProjectTemplateTokens(project);
 
 		String path = file.getPath();
@@ -34,12 +36,6 @@ public abstract class Package {
 			return new IvyPackage(file);
 		}
 
-		/*if (path.endsWith("package.json") ||
-			path.endsWith("package-lock.json")) {
-
-			return new NpmPackage(project, file);
-		}*/
-
 		if (path.endsWith("pom.xml")) {
 			return new PomPackage(project, file);
 		}
@@ -47,15 +43,15 @@ public abstract class Package {
 		throw new UnknownPackageTypeException(path);
 	}
 
-	public void addDependency(Dependency dependency) {
+	public void addDependency(MavenDependency dependency) {
 		_dependencies.add(dependency);
 	}
 
 	public void addDependency(String group, String artifact, String version) {
-		addDependency(new Dependency(group, artifact, version));
+		addDependency(new MavenDependency(group, artifact, version));
 	}
 
-	public Set<Dependency> getDependencies() {
+	public Set<MavenDependency> getDependencies() {
 		return _dependencies;
 	}
 
@@ -130,6 +126,6 @@ public abstract class Package {
 
 	private static Map<String, String> _PROJECT_TEMPLATE_TOKENS = null;
 
-	private Set<Dependency> _dependencies = new HashSet<Dependency>();
+	private Set<MavenDependency> _dependencies = new HashSet<MavenDependency>();
 
 }
