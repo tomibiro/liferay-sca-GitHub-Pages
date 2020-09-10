@@ -1,4 +1,4 @@
-package com.liferay.sca.model;
+package com.liferay.sca.model.maven;
 
 import java.io.File;
 

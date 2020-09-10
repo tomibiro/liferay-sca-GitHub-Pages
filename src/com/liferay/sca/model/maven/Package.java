@@ -1,4 +1,4 @@
-package com.liferay.sca.model;
+package com.liferay.sca.model.maven;
 
 import com.liferay.sca.exception.ParseException;
 import com.liferay.sca.exception.UnknownPackageTypeException;
@@ -33,6 +33,12 @@ public abstract class Package {
 		if (path.endsWith("ivy.xml")) {
 			return new IvyPackage(file);
 		}
+
+		/*if (path.endsWith("package.json") ||
+			path.endsWith("package-lock.json")) {
+
+			return new NpmPackage(project, file);
+		}*/
 
 		if (path.endsWith("pom.xml")) {
 			return new PomPackage(project, file);

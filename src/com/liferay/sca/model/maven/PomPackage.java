@@ -1,4 +1,4 @@
-package com.liferay.sca.model;
+package com.liferay.sca.model.maven;
 
 import com.liferay.sca.exception.BlankXmlException;
 import com.liferay.sca.util.FileUtil;

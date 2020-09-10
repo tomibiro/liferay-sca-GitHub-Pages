@@ -1,6 +1,6 @@
 package com.liferay.sca.comparator;
 
-import com.liferay.sca.model.Dependency;
+import com.liferay.sca.model.maven.Dependency;
 
 import java.util.Comparator;
 

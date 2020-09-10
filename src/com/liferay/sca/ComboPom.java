@@ -1,7 +1,7 @@
 package com.liferay.sca;
 
-import com.liferay.sca.model.Dependency;
-import com.liferay.sca.model.Report;
+import com.liferay.sca.model.maven.Dependency;
+import com.liferay.sca.model.maven.Report;
 import com.liferay.sca.util.FileUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;

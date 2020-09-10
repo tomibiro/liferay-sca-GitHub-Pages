@@ -1,8 +1,8 @@
 package com.liferay.sca;
 
 import com.liferay.sca.exception.BlankXmlException;
-import com.liferay.sca.model.Package;
-import com.liferay.sca.model.Report;
+import com.liferay.sca.model.maven.Package;
+import com.liferay.sca.model.maven.Report;
 import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;

@@ -1,4 +1,4 @@
-package com.liferay.sca.model;
+package com.liferay.sca.model.maven;
 
 public class Dependency {
 
