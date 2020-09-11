@@ -44,8 +44,10 @@ public class MavenReport {
 	public static MavenReport load(String project) throws Exception {
 		ProjectUtil.validate(project);
 
-		File file = new File(
-			ProjectPropsUtil.get(project, PropsKeys.DEPENDENCIES_REPORT));
+		String path = ProjectPropsUtil.get(
+			project, PropsKeys.DEPENDENCIES_REPORT_DIR);
+
+		File file = new File(path + _FILENAME);
 
 		MavenReport report = load(file);
 
@@ -76,18 +78,21 @@ public class MavenReport {
 			sb.append("\n");
 		}
 
-		FileUtil.write(
-			sb.toString(),
-			ProjectPropsUtil.get(_project, PropsKeys.DEPENDENCIES_REPORT));
+		String path = ProjectPropsUtil.get(
+			_project, PropsKeys.DEPENDENCIES_REPORT_DIR);
+
+		FileUtil.write(sb.toString(), path + _FILENAME);
 	}
 
 	public void setProject(String project) {
 		_project = project;
 	}
 
-	Set<MavenDependency> _dependencies = new TreeSet<MavenDependency>(
+	private static String _FILENAME = "/maven.dependencies";
+
+	private Set<MavenDependency> _dependencies = new TreeSet<MavenDependency>(
 		new MavenDependencyComparator());
 
-	String _project;
+	private String _project;
 
 }
