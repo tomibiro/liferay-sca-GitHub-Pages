@@ -41,12 +41,26 @@ public class MavenComboPackage {
 		Set<MavenDependency> dependencies = report.getDependencies();
 
 		for (MavenDependency dependency : dependencies) {
+			if (ignore(dependency)) {
+				continue;
+			}
+
 			_addDependency(sb, dependency);
 		}
 
 		_addFooter(sb);
 
 		save(project, sb.toString());
+	}
+
+	protected static boolean ignore(MavenDependency dependency) {
+		String version = dependency.getVersion();
+
+		if (version.equals("default")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected static void save(String project, String content) throws IOException {
