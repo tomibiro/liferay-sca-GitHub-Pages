@@ -11,8 +11,10 @@ import java.io.IOException;
 
 public class MavenComboPackage {
 
-	public static void generate(String project, DependencySet dependencySet)
+	public static void generate(DependencySet dependencySet)
 		throws Exception {
+
+		String project = dependencySet.getProject();
 
 		ProjectUtil.validate(project);
 

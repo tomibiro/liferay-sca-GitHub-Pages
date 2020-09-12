@@ -17,7 +17,7 @@ import java.util.Set;
 public class DependencyFinder {
 
 	public static DependencySet find(String project) throws Exception {
-		DependencySet dependencySet = new DependencySet();
+		DependencySet dependencySet = new DependencySet(project);
 
 		ProjectUtil.validate(project);
 

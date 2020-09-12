@@ -23,7 +23,7 @@ public class SCA {
 	public static void run(String project) throws Exception {
 		DependencySet dependencySet = DependencyFinder.find(project);
 
-		MavenComboPackage.generate(project, dependencySet);
+		MavenComboPackage.generate(dependencySet);
 	}
 
 }
