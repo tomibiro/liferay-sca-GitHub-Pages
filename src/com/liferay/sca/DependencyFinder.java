@@ -1,6 +1,7 @@
 package com.liferay.sca;
 
 import com.liferay.sca.exception.BlankXmlException;
+import com.liferay.sca.model.DependencySet;
 import com.liferay.sca.model.maven.MavenPackage;
 import com.liferay.sca.model.maven.MavenReport;
 import com.liferay.sca.util.ArrayUtil;
@@ -31,7 +32,9 @@ public class DependencyFinder {
 		}
 	}
 
-	public static void find(String project) throws Exception {
+	public static DependencySet find(String project) throws Exception {
+		DependencySet dependencySet = new DependencySet();
+
 		ProjectUtil.validate(project);
 
 		MavenReport report = new MavenReport();
@@ -48,12 +51,16 @@ public class DependencyFinder {
 				MavenPackage packageObj = MavenPackage.load(project, file);
 
 				report.add(packageObj.getDependencies());
+
+				dependencySet.addAll(packageObj.getDependencies());
 			}
 			catch (BlankXmlException bxe) {
 			}
 		}
 
 		report.save();
+
+		return dependencySet;
 	}
 
 	protected static Set<File> findPackageFiles(File srcCodeFile) {

@@ -1,5 +1,6 @@
 package com.liferay.sca;
 
+import com.liferay.sca.model.DependencySet;
 import com.liferay.sca.model.maven.MavenDependency;
 import com.liferay.sca.model.maven.MavenReport;
 import com.liferay.sca.util.FileUtil;
@@ -41,6 +42,26 @@ public class MavenComboPackage {
 		Set<MavenDependency> dependencies = report.getDependencies();
 
 		for (MavenDependency dependency : dependencies) {
+			if (ignore(dependency)) {
+				continue;
+			}
+
+			_addDependency(sb, dependency);
+		}
+
+		_addFooter(sb);
+
+		save(project, sb.toString());
+	}
+
+	public static void generate(String project, DependencySet dependencySet) throws Exception {
+		ProjectUtil.validate(project);
+
+		StringBuilder sb = new StringBuilder();
+
+		_addHeader(sb, project);
+
+		for (MavenDependency dependency : dependencySet.mavenDependencies()) {
 			if (ignore(dependency)) {
 				continue;
 			}
