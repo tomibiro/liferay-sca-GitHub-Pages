@@ -3,7 +3,6 @@ package com.liferay.sca;
 import com.liferay.sca.exception.BlankXmlException;
 import com.liferay.sca.model.DependencySet;
 import com.liferay.sca.model.maven.MavenPackage;
-import com.liferay.sca.model.maven.MavenReport;
 import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;
@@ -17,29 +16,10 @@ import java.util.Set;
 
 public class DependencyFinder {
 
-	public static void main(String[] args) throws Exception {
-		if (args.length == 0) {
-			find();
-		}
-		else {
-			find(args[0]);
-		}
-	}
-
-	public static void find() throws Exception {
-		for (String project : PropsValues.PROJECTS) {
-			find(project);
-		}
-	}
-
 	public static DependencySet find(String project) throws Exception {
 		DependencySet dependencySet = new DependencySet();
 
 		ProjectUtil.validate(project);
-
-		MavenReport report = new MavenReport();
-
-		report.setProject(project);
 
 		File srcCodeFile = new File(
 			ProjectPropsUtil.get(project, PropsKeys.SRC_CODE));
@@ -50,15 +30,11 @@ public class DependencyFinder {
 			try {
 				MavenPackage packageObj = MavenPackage.load(project, file);
 
-				report.add(packageObj.getDependencies());
-
 				dependencySet.addAll(packageObj.getDependencies());
 			}
 			catch (BlankXmlException bxe) {
 			}
 		}
-
-		report.save();
 
 		return dependencySet;
 	}
