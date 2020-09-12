@@ -53,21 +53,36 @@ public class GradlePackage extends MavenPackage {
 	private String _getProperty(String dependencyLine, String property, File file)
 		throws ParseException {
 
-		int x = dependencyLine.indexOf(property + ":");
+		String query = property + ": ";
+
+		int x = dependencyLine.indexOf(query);
 
 		if (x < 0) {
 			return null;
 		}
 
-		x = dependencyLine.indexOf("\"", x) + 1;
+		x = x + query.length();
 
-		int y = dependencyLine.indexOf("\"", x);
+		if (dependencyLine.charAt(x) == '"') {
+			x = x + 1;
 
-		if (y < 0) {
-			throw new ParseException(dependencyLine, file);
+			int y = dependencyLine.indexOf("\"", x);
+
+			if (y < 0) {
+				throw new ParseException(dependencyLine, file);
+			}
+
+			return dependencyLine.substring(x, y);
 		}
 
-		return dependencyLine.substring(x, y);
+		int y = dependencyLine.indexOf(",", x);
+
+		if (y >= 0) {
+			return dependencyLine.substring(x, y).trim();
+		}
+		else {
+			return dependencyLine.substring(x).trim();
+		}
 	}
 
 	private void _parse(String project, File file) {
