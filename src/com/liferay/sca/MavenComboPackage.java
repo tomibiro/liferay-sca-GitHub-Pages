@@ -2,57 +2,14 @@ package com.liferay.sca;
 
 import com.liferay.sca.model.DependencySet;
 import com.liferay.sca.model.maven.MavenDependency;
-import com.liferay.sca.model.maven.MavenReport;
 import com.liferay.sca.util.FileUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
-import com.liferay.sca.util.PropsValues;
 
 import java.io.IOException;
 
-import java.util.Set;
-
 public class MavenComboPackage {
-
-	public static void main(String[] args) throws Exception {
-		if (args.length == 0) {
-			generate();
-		}
-		else {
-			generate(args[0]);
-		}
-	}
-
-	public static void generate() throws Exception {
-		for (String project : PropsValues.PROJECTS) {
-			generate(project);
-		}
-	}
-
-	public static void generate(String project) throws Exception {
-		ProjectUtil.validate(project);
-
-		StringBuilder sb = new StringBuilder();
-
-		_addHeader(sb, project);
-
-		MavenReport report = MavenReport.load(project);
-
-		Set<MavenDependency> dependencies = report.getDependencies();
-
-		for (MavenDependency dependency : dependencies) {
-			if (ignore(dependency)) {
-				continue;
-			}
-
-			_addDependency(sb, dependency);
-		}
-
-		_addFooter(sb);
-
-		save(project, sb.toString());
-	}
 
 	public static void generate(String project, DependencySet dependencySet) throws Exception {
 		ProjectUtil.validate(project);

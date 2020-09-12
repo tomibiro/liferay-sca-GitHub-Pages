@@ -66,30 +66,7 @@
 
 	<target name="help">
 		<echo message="Usage: ant find [-D&lt;project&gt;]" level="info" />
-		<echo message="Usage: ant maven [-D&lt;project&gt;]" level="info" />
 		<echo message="Usage: ant run [-D&lt;project&gt;]" level="info" />
-	</target>
-
-	<target name="maven" depends="find">
-		<if>
-			<isset property="project" />
-			<then>
-				<java
-					classname="com.liferay.sca.MavenComboPackage"
-					classpath="classes"
-					classpathref="lib.classpath"
-				>
-					<arg value="${project}" />
-				</java>
-			</then>
-			<else>
-				<java
-					classname="com.liferay.sca.MavenComboPackage"
-					classpath="classes"
-					classpathref="lib.classpath"
-				/>
-			</else>
-		</if>
 	</target>
 
 	<target name="run">
