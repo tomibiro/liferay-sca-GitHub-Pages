@@ -11,14 +11,16 @@ import java.io.IOException;
 
 public class MavenComboPackage {
 
-	public static void generate(String project, DependencySet dependencySet) throws Exception {
+	public static void generate(String project, DependencySet dependencySet)
+		throws Exception {
+
 		ProjectUtil.validate(project);
 
 		StringBuilder sb = new StringBuilder();
 
 		_addHeader(sb, project);
 
-		for (MavenDependency dependency : dependencySet.mavenDependencies()) {
+		for (MavenDependency dependency : dependencySet.getMavenDependencies()) {
 			if (ignore(dependency)) {
 				continue;
 			}
