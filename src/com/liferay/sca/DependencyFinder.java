@@ -5,7 +5,6 @@ import com.liferay.sca.model.DependencySet;
 import com.liferay.sca.model.maven.MavenPackage;
 import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
-import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
 import com.liferay.sca.util.PropsValues;
 
@@ -18,8 +17,6 @@ public class DependencyFinder {
 
 	public static DependencySet find(String project) throws Exception {
 		DependencySet dependencySet = new DependencySet(project);
-
-		ProjectUtil.validate(project);
 
 		File srcCodeFile = new File(
 			ProjectPropsUtil.get(project, PropsKeys.SRC_CODE));

@@ -4,7 +4,6 @@ import com.liferay.sca.model.DependencySet;
 import com.liferay.sca.model.maven.MavenDependency;
 import com.liferay.sca.util.FileUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
-import com.liferay.sca.util.ProjectUtil;
 import com.liferay.sca.util.PropsKeys;
 
 import java.io.IOException;
@@ -15,8 +14,6 @@ public class MavenComboPackage {
 		throws Exception {
 
 		String project = dependencySet.getProject();
-
-		ProjectUtil.validate(project);
 
 		StringBuilder sb = new StringBuilder();
 
