@@ -2,7 +2,7 @@ package com.liferay.sca.model.maven;
 
 import com.liferay.sca.model.Dependency;
 
-public class MavenDependency implements Dependency {
+public class MavenDependency extends Dependency {
 
 	public MavenDependency(String group, String artifact, String version) {
 		_group = group;

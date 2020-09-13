@@ -1,4 +1,4 @@
 package com.liferay.sca.model;
 
-public interface Dependency {
+public abstract class Dependency {
 }
