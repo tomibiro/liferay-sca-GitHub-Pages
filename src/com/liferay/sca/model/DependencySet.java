@@ -15,12 +15,24 @@ public class DependencySet {
 		setProject(project);
 	}
 
-	public  boolean add(MavenDependency dependency) {
-		return _mavenDependencies.add((MavenDependency)dependency);
+	public  boolean add(Dependency dependency) {
+		if (dependency instanceof MavenDependency) {
+			return _mavenDependencies.add((MavenDependency)dependency);
+		}
+
+		return false;
 	}
 
-	public  boolean addAll(Set<MavenDependency> dependencies) {
-		return _mavenDependencies.addAll(dependencies);
+	public  boolean addAll(Set<Dependency> dependencies) {
+		boolean isChanged = false;
+
+		for (Dependency dependency : dependencies) {
+			boolean result = add(dependency);
+
+			isChanged = isChanged || result;
+		}
+
+		return isChanged;
 	}
 
 	public Set<MavenDependency> getMavenDependencies() {

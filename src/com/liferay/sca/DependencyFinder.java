@@ -2,7 +2,7 @@ package com.liferay.sca;
 
 import com.liferay.sca.exception.BlankXmlException;
 import com.liferay.sca.model.DependencySet;
-import com.liferay.sca.model.maven.MavenPackage;
+import com.liferay.sca.model.Package;
 import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.PropsKeys;
@@ -25,7 +25,7 @@ public class DependencyFinder {
 
 		for (File file : packageFiles) {
 			try {
-				MavenPackage packageObj = MavenPackage.load(project, file);
+				Package packageObj = Package.load(project, file);
 
 				dependencySet.addAll(packageObj.getDependencies());
 			}

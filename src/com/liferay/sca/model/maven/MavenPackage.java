@@ -1,7 +1,8 @@
 package com.liferay.sca.model.maven;
 
 import com.liferay.sca.exception.ParseException;
-import com.liferay.sca.exception.UnknownPackageTypeException;
+import com.liferay.sca.model.Dependency;
+import com.liferay.sca.model.Package;
 import com.liferay.sca.util.FileUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.PropsKeys;
@@ -15,33 +16,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class MavenPackage {
-
-	public static MavenPackage load(String project, File file)
-		throws Exception {
-
-		getProjectTemplateTokens(project);
-
-		String path = file.getPath();
-
-		if (path.endsWith(".gradle")) {
-			return new GradlePackage(project, file);
-		}
-
-		if (path.endsWith("dependencies.properties")) {
-			return new PropertiesPackage(file);
-		}
-
-		if (path.endsWith("ivy.xml")) {
-			return new IvyPackage(file);
-		}
-
-		if (path.endsWith("pom.xml")) {
-			return new PomPackage(project, file);
-		}
-
-		throw new UnknownPackageTypeException(path);
-	}
+public abstract class MavenPackage extends Package {
 
 	public void addDependency(MavenDependency dependency) {
 		_dependencies.add(dependency);
@@ -51,8 +26,8 @@ public abstract class MavenPackage {
 		addDependency(new MavenDependency(group, artifact, version));
 	}
 
-	public Set<MavenDependency> getDependencies() {
-		return _dependencies;
+	public Set<Dependency> getDependencies() {
+		return (Set<Dependency>)_dependencies;
 	}
 
 	public static Map<String,String> getProjectTemplateTokens(String project)
@@ -126,6 +101,6 @@ public abstract class MavenPackage {
 
 	private static Map<String, String> _PROJECT_TEMPLATE_TOKENS = null;
 
-	private Set<MavenDependency> _dependencies = new HashSet<MavenDependency>();
+	private Set<Dependency> _dependencies = new HashSet<Dependency>();
 
 }
