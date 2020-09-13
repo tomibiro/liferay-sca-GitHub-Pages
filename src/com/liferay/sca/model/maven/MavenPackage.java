@@ -27,7 +27,7 @@ public abstract class MavenPackage extends Package {
 	}
 
 	public Set<Dependency> getDependencies() {
-		return (Set<Dependency>)_dependencies;
+		return _dependencies;
 	}
 
 	public static Map<String,String> getProjectTemplateTokens(String project)
