@@ -42,7 +42,9 @@ public class MavenComboPackage {
 		return false;
 	}
 
-	protected static void save(String project, String content) throws IOException {
+	protected static void save(String project, String content)
+		throws IOException {
+
 		String folder = ProjectPropsUtil.get(
 			project, PropsKeys.DEPENDABOT_PACKAGE_DIR);
 
