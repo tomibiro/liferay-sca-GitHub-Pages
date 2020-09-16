@@ -5,6 +5,7 @@ import com.liferay.sca.model.maven.GradlePackage;
 import com.liferay.sca.model.maven.IvyPackage;
 import com.liferay.sca.model.maven.PomPackage;
 import com.liferay.sca.model.maven.PropertiesPackage;
+import com.liferay.sca.model.npm.PackageJsonPackage;
 
 import java.io.File;
 
@@ -27,6 +28,10 @@ public abstract class Package {
 
 		if (path.endsWith("ivy.xml")) {
 			return new IvyPackage(file);
+		}
+
+		if (path.endsWith("package.json")) {
+			return new PackageJsonPackage(project, file);
 		}
 
 		if (path.endsWith("pom.xml")) {
