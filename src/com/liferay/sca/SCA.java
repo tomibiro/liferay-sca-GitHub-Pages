@@ -28,6 +28,7 @@ public class SCA {
 		DependencySet dependencySet = DependencyFinder.find(project);
 
 		MavenComboPackage.generate(dependencySet);
+		NpmComboPackage.generate(dependencySet);
 	}
 
 	protected static void validateProject(String project)
