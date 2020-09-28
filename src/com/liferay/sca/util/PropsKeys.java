@@ -5,6 +5,8 @@ public interface PropsKeys {
 	public static final String DEPENDABOT_PACKAGE_DIR =
 		"dependabot.package.dir";
 
+	public static final String GIT_PACK_REF = "git.pack.ref";
+
 	public static final String GRADLE_PROJECT_TEMPLATE_TOKEN_FILE =
 		"gradle.project.template.token.file";
 

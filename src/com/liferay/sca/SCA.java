@@ -29,6 +29,7 @@ public class SCA {
 		MavenComboPackage.generate(dependencySet);
 		NpmComboPackage.generate(dependencySet);
 		SonatypeOssIndex.generate(dependencySet);
+		GitHash.generate(project);
 	}
 
 }
