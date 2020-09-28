@@ -17,4 +17,10 @@ public interface PropsValues {
 	public static final String[] PROJECTS = PropsUtil.getArray(
 		PropsKeys.PROJECTS);
 
+	public static final String SONATYPE_OSS_INDEX_API_TOKEN = PropsUtil.get(
+		PropsKeys.SONATYPE_OSS_INDEX_API_TOKEN);
+
+	public static final String SONATYPE_OSS_INDEX_USERNAME = PropsUtil.get(
+		PropsKeys.SONATYPE_OSS_INDEX_USERNAME);
+
 }

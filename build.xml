@@ -67,4 +67,14 @@
 			</else>
 		</if>
 	</target>
+
+	<target name="sonatype">
+		<java
+			classname="com.liferay.sca.SonatypeOssIndex"
+			classpath="classes"
+			classpathref="lib.classpath"
+		>
+			<arg value="${project}" />
+		</java>
+	</target>
 </project>

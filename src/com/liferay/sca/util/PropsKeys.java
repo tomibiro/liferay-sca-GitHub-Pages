@@ -15,7 +15,13 @@ public interface PropsKeys {
 	public static final String PACKAGE_FILENAMES = "package.filenames";
 
 	public static final String PROJECTS = "projects";
-	
+
+	public static final String SONATYPE_OSS_INDEX_API_TOKEN =
+		"sonatype.oss.index.api.token";
+
+	public static final String SONATYPE_OSS_INDEX_USERNAME =
+		"sonatype.oss.index.username";
+
 	public static final String SRC_CODE = "src.code";
 
 }
