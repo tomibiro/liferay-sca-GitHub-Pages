@@ -43,7 +43,7 @@
 	</target>
 
 	<target name="help">
-		<echo message="Usage: ant run [-D&lt;project&gt;]" level="info" />
+		<echo message="Usage: ant run [-Dproject=&lt;project&gt;]" level="info" />
 	</target>
 
 	<target name="run">
