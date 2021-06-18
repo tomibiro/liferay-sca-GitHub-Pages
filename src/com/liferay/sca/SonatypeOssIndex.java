@@ -96,9 +96,9 @@ public class SonatypeOssIndex {
 				NpmDependency npmDependency = (NpmDependency)dependency;
 
 				sb.append("\"pkg:npm/");
-				sb.append(_encode(npmDependency.getPackage()));
+				sb.append(_encodeNpmPackage(npmDependency.getPackage()));
 				sb.append("@");
-				sb.append(npmDependency.getVersion());
+				sb.append(_encodeNpmVersion(npmDependency.getVersion()));
 				sb.append("\",");
 			}
 		}
@@ -159,8 +159,16 @@ public class SonatypeOssIndex {
 		}
 	}
 
-	private static String _encode(String str) {
-		return str.replaceAll("@", "%40");
+	private static String _encodeNpmPackage(String pkg) {
+		return pkg.replaceAll("@", "%40");
+	}
+
+	private static String _encodeNpmVersion(String version) {
+		if (version.startsWith("~") || version.startsWith("^")) {
+			return version.substring(1);
+		}
+
+		return version;
 	}
 
 	private static String _formatAuth(String username, String apiToken) {

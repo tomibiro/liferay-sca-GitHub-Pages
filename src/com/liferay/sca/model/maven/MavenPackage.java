@@ -9,6 +9,7 @@ import com.liferay.sca.util.PropsKeys;
 import com.liferay.sca.util.PropsValues;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -39,40 +40,46 @@ public abstract class MavenPackage extends Package {
 
 		_PROJECT_TEMPLATE_TOKENS = new HashMap<String, String>();
 
-		File projectTemplateTokensFile = new File(
-			ProjectPropsUtil.get(project, PropsKeys.SRC_CODE),
-			PropsValues.GRADLE_PROJECT_TEMPLATE_TOKEN_FILE);
+		try {
+			File projectTemplateTokensFile = new File(
+				ProjectPropsUtil.get(project, PropsKeys.SRC_CODE),
+				PropsValues.GRADLE_PROJECT_TEMPLATE_TOKEN_FILE);
 
-		String content = FileUtil.read(projectTemplateTokensFile);
+			String content = FileUtil.read(projectTemplateTokensFile);
 
-		int x = content.indexOf(_PROJECT_TEMPLATE_TOKEN_START);
+			int x = content.indexOf(_PROJECT_TEMPLATE_TOKEN_START);
 
-		if (x < 0) {
+			if (x < 0) {
+				return _PROJECT_TEMPLATE_TOKENS;
+			}
+
+			x = x + _PROJECT_TEMPLATE_TOKEN_START.length();
+
+			int y = content.indexOf(_PROJECT_TEMPLATE_TOKEN_END, x);
+
+			if (y < 0) {
+				ParseException pe = new ParseException(
+					content.substring(x, x+80), projectTemplateTokensFile);
+
+				pe.printStackTrace();
+
+				return _PROJECT_TEMPLATE_TOKENS;
+			}
+
+			String[] tokenLineList = content.substring(x, y).split(",");
+
+			for (String tokenLine : tokenLineList) {
+				String[] parts = tokenLine.split(":");
+
+				parts[0] = _removeQuotes(parts[0]);
+				parts[1] = _removeQuotes(parts[1]);
+
+				_PROJECT_TEMPLATE_TOKENS.put(parts[0], parts[1]);
+			}
+
 			return _PROJECT_TEMPLATE_TOKENS;
 		}
-
-		x = x + _PROJECT_TEMPLATE_TOKEN_START.length();
-
-		int y = content.indexOf(_PROJECT_TEMPLATE_TOKEN_END, x);
-
-		if (y < 0) {
-			ParseException pe = new ParseException(
-				content.substring(x, x+80), projectTemplateTokensFile);
-
-			pe.printStackTrace();
-
-			return _PROJECT_TEMPLATE_TOKENS;
-		}
-
-		String[] tokenLineList = content.substring(x, y).split(",");
-
-		for (String tokenLine : tokenLineList) {
-			String[] parts = tokenLine.split(":");
-
-			parts[0] = _removeQuotes(parts[0]);
-			parts[1] = _removeQuotes(parts[1]);
-
-			_PROJECT_TEMPLATE_TOKENS.put(parts[0], parts[1]);
+		catch (FileNotFoundException fnfe) {
 		}
 
 		return _PROJECT_TEMPLATE_TOKENS;
