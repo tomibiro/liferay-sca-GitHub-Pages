@@ -2,6 +2,8 @@
 
 <project name="liferay-sca" default="help" basedir=".">
 	<property name="project.dir" value="." />
+	<property file="${project.dir}/config.properties" />
+	<property file="${project.dir}/config-ext.properties" />
 
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
 		<classpath>
@@ -44,6 +46,8 @@
 
 	<target name="help">
 		<echo message="Usage: ant run [-Dproject=&lt;project&gt;]" level="info" />
+		<echo message="" level="info" />
+		<echo message="Project List: ${projects}" level="info" />
 	</target>
 
 	<target name="run">
