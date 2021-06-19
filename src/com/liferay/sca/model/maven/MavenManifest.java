@@ -2,7 +2,7 @@ package com.liferay.sca.model.maven;
 
 import com.liferay.sca.exception.ParseException;
 import com.liferay.sca.model.Dependency;
-import com.liferay.sca.model.Package;
+import com.liferay.sca.model.Manifest;
 import com.liferay.sca.util.FileUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.PropsKeys;
@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class MavenPackage extends Package {
+public abstract class MavenManifest extends Manifest {
 
 	public void addDependency(MavenDependency dependency) {
 		_dependencies.add(dependency);

@@ -14,7 +14,7 @@ public interface PropsKeys {
 
 	public static final String IGNORED_FOLDERS = "ignored.folders";
 
-	public static final String PACKAGE_FILENAMES = "package.filenames";
+	public static final String MANIFEST_FILENAMES = "manifest.filenames";
 
 	public static final String PROJECTS = "projects";
 

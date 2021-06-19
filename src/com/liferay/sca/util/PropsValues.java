@@ -11,8 +11,8 @@ public interface PropsValues {
 	public static final String[] IGNORED_FOLDERS = PropsUtil.getArray(
 		PropsKeys.IGNORED_FOLDERS);
 
-	public static final String[] PACKAGE_FILENAMES = PropsUtil.getArray(
-		PropsKeys.PACKAGE_FILENAMES);
+	public static final String[] MANIFEST_FILENAMES = PropsUtil.getArray(
+		PropsKeys.MANIFEST_FILENAMES);
 
 	public static final String[] PROJECTS = PropsUtil.getArray(
 		PropsKeys.PROJECTS);

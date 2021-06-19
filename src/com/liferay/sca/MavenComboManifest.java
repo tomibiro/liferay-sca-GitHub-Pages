@@ -8,7 +8,7 @@ import com.liferay.sca.util.PropsKeys;
 
 import java.io.IOException;
 
-public class MavenComboPackage {
+public class MavenComboManifest {
 
 	public static void generate(DependencySet dependencySet)
 		throws Exception {

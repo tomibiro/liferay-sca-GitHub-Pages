@@ -9,9 +9,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class PackageJsonPackage extends NpmPackage {
+public class PackageJsonManifest extends NpmManifest {
 
-	public PackageJsonPackage(String project, File file) throws IOException {
+	public PackageJsonManifest(String project, File file) throws IOException {
 		String content = FileUtil.read(file);
 
 		JSONParser parser = new JSONParser();

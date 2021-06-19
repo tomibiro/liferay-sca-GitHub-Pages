@@ -14,9 +14,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class PomPackage extends MavenPackage {
+public class PomManifest extends MavenManifest {
 
-	public PomPackage(String project, File file) throws Exception {
+	public PomManifest(String project, File file) throws Exception {
 		if (_isBlank(file)) {
 			throw new BlankXmlException(file.getPath() + " is blank");
 		}

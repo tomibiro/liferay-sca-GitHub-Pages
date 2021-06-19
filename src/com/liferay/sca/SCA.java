@@ -26,8 +26,8 @@ public class SCA {
 
 		DependencySet dependencySet = DependencyFinder.find(project);
 
-		MavenComboPackage.generate(dependencySet);
-		NpmComboPackage.generate(dependencySet);
+		MavenComboManifest.generate(dependencySet);
+		NpmComboManifest.generate(dependencySet);
 		SonatypeOssIndex.generate(dependencySet);
 		GitHash.generate(project);
 	}

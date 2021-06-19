@@ -8,7 +8,7 @@ import com.liferay.sca.util.PropsKeys;
 
 import java.io.IOException;
 
-public class NpmComboPackage {
+public class NpmComboManifest {
 
 	public static void generate(DependencySet dependencySet)
 		throws IOException {

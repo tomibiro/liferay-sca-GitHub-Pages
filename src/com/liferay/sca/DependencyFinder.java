@@ -2,7 +2,7 @@ package com.liferay.sca;
 
 import com.liferay.sca.exception.BlankXmlException;
 import com.liferay.sca.model.DependencySet;
-import com.liferay.sca.model.Package;
+import com.liferay.sca.model.Manifest;
 import com.liferay.sca.util.ArrayUtil;
 import com.liferay.sca.util.ProjectPropsUtil;
 import com.liferay.sca.util.PropsKeys;
@@ -21,13 +21,13 @@ public class DependencyFinder {
 		File srcCodeFile = new File(
 			ProjectPropsUtil.get(project, PropsKeys.SRC_CODE));
 
-		Set<File> packageFiles = findPackageFiles(srcCodeFile);
+		Set<File> manifestFiles = findManifestFiles(srcCodeFile);
 
-		for (File file : packageFiles) {
+		for (File file : manifestFiles) {
 			try {
-				Package packageObj = Package.load(project, file);
+				Manifest manifestObj = Manifest.load(project, file);
 
-				dependencySet.addAll(packageObj.getDependencies());
+				dependencySet.addAll(manifestObj.getDependencies());
 			}
 			catch (BlankXmlException bxe) {
 			}
@@ -36,15 +36,15 @@ public class DependencyFinder {
 		return dependencySet;
 	}
 
-	protected static Set<File> findPackageFiles(File srcCodeFile) {
-		Set<File> packageFiles = new HashSet<File>();
+	protected static Set<File> findManifestFiles(File srcCodeFile) {
+		Set<File> manifestFiles = new HashSet<File>();
 
-		_findPackageFiles(srcCodeFile, packageFiles);
+		_findManifestFiles(srcCodeFile, manifestFiles);
 
-		return packageFiles;
+		return manifestFiles;
 	}
 
-	private static void _findPackageFiles(File folder, Set<File> packageFiles) {
+	private static void _findManifestFiles(File folder, Set<File> manifestFiles) {
 		File[] files = folder.listFiles();
 
 		for (File file : files) {
@@ -53,7 +53,7 @@ public class DependencyFinder {
 					PropsValues.IGNORED_FOLDERS, file.getName());
 
 				if (!isIgnoredFolder) {
-					_findPackageFiles(file, packageFiles);
+					_findManifestFiles(file, manifestFiles);
 				}
 
 				continue;
@@ -63,9 +63,9 @@ public class DependencyFinder {
 
 			absolutePath = absolutePath.replace('\\', '/');
 
-			for (String packageFilename : PropsValues.PACKAGE_FILENAMES) {
+			for (String packageFilename : PropsValues.MANIFEST_FILENAMES) {
 				if (absolutePath.endsWith(packageFilename)) {
-					packageFiles.add(file);
+					manifestFiles.add(file);
 				}
 			}
 		}

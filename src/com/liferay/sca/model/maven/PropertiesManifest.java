@@ -8,9 +8,9 @@ import java.io.IOException;
 
 import java.util.Properties;
 
-public class PropertiesPackage extends MavenPackage {
+public class PropertiesManifest extends MavenManifest {
 
-	public PropertiesPackage(File file) {
+	public PropertiesManifest(File file) {
 		try {
 			Properties properties = new Properties();
 

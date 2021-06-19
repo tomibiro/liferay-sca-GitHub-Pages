@@ -10,9 +10,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class IvyPackage extends MavenPackage {
+public class IvyManifest extends MavenManifest {
 
-	public IvyPackage(File file) throws Exception {
+	public IvyManifest(File file) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 		DocumentBuilder builder = factory.newDocumentBuilder();
