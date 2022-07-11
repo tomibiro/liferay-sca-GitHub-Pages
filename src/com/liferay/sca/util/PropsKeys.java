@@ -18,6 +18,9 @@ public interface PropsKeys {
 
 	public static final String PROJECTS = "projects";
 
+	public static final String SONATYPE_OSS_INDEX_ENABLED =
+		"sonatype.oss.index.enabled";
+
 	public static final String SONATYPE_OSS_INDEX_API_TOKEN =
 		"sonatype.oss.index.api.token";
 
