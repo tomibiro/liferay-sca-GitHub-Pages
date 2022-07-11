@@ -29,6 +29,16 @@ public class NpmDependency extends Dependency {
 		return _version;
 	}
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getPackage());
+		sb.append(":");
+		sb.append(getVersion());
+
+		return sb.toString();
+	}
+
 	private String _package;
 	private String _version;
 }
