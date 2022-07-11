@@ -6,4 +6,8 @@ public class ProjectPropsUtil {
 		return PropsUtil.get(project + "." + key);
 	}
 
+	public static String[] getArray(String project, String key) {
+		return PropsUtil.getArray(project + "." + key);
+	}
+
 }
