@@ -174,12 +174,11 @@ public class SonatypeOssIndex {
 	private static String _formatAuth(String username, String apiToken) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("Basic ");
 		sb.append(username);
 		sb.append(":");
 		sb.append(apiToken);
 
-		return Base64Util.encode(sb.toString());
+		return "Basic " + Base64Util.encode(sb.toString());
 	}
 
 	private static CloseableHttpClient _getHttpClient() {
