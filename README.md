@@ -20,7 +20,20 @@ The scan additional projects, add the following properties:
 
 where `****` is a prefix of your choice. Add this prefix to the `projects` property.
 
+The Sonatype OSS Index service is heavily rate-limiting anonymous requests. To avoid 
+this, register for an account at https://ossindex.sonatype.org and set the email 
+address and API token associated with your account in the following properties:
+
+    sonatype.oss.index.username=
+    sonatype.oss.index.api.token=
+
 ## To Run
+
+Before running the program, or after making any changes, you must compile it:
+
+    ant compile
+
+Then run the program: 
 
     ant run
 
