@@ -20,15 +20,14 @@ jobs:
           java-version: '17'
 
       - name: Run vulnerability scanner
-        run: 
+        run: |
           ant compile
           ant run
-
       - name: Upload report artifact
         uses: actions/upload-artifact@v4
         with:
           name: vuln-report
-          path: ./build/reports/vuln-report.html
+          path: C:/Liferay/liferay-sca-packages/master/sonatype-oss-index-report.html
 
       - name: Send email with report
         uses: dawidd6/action-send-mail@v3
