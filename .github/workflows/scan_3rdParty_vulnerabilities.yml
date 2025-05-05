@@ -38,10 +38,8 @@ jobs:
         run: |
           ant compile
           ant run
-      - name: Show generated HTML content
+      - name: Show HTML file last modified date
         run: |
-          echo "------ Begin HTML Content ------"
-          cat ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
-          echo "------ End HTML Content ------"
+            echo "Last modified:"
+            stat -c '%y'  ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
 
- 
