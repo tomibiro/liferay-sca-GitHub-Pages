@@ -44,3 +44,8 @@ jobs:
             stat -c '%y'  ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
             echo "Current system date:"
             date +"%Y-%m-%d %H:%M:%S"
+      - name: Upload generated HTML file
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
