@@ -49,3 +49,17 @@ jobs:
         with:
           name: report
           path: liferay-sca-packages/master/sonatype-oss-index-report.html
+      - name: Send email with report
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: Liferay SCA Report
+          body: |
+            Please find the the report attached from liferay-sca tool
+          to: tamas.biro@liferay.com
+          from: ${{ secrets.SMTP_USER }}
+          attachments: liferay-sca-packages/master/sonatype-oss-index-report.html
+
