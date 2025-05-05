@@ -47,5 +47,5 @@ jobs:
       - name: Upload generated HTML file
         uses: actions/upload-artifact@v4
         with:
-          name: report.html
-          path: ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
+          name: report
+          path: liferay-sca-packages/master/sonatype-oss-index-report.html
