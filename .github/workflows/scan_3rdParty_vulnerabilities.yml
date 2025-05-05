@@ -38,24 +38,10 @@ jobs:
         run: |
           ant compile
           ant run
-      - name: Upload report artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: vuln-report
-          path: C:/Liferay/liferay-sca-packages/master/sonatype-oss-index-report.html
+      - name: Show generated HTML content
+        run: |
+          echo "------ Begin HTML Content ------"
+          cat ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
+          echo "------ End HTML Content ------"
 
-      - name: Send email with report
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.yourmail.com
-          server_port: 465
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "Weekly 3rd party vulnerability report"
-          to: you@example.com
-          from: "scanner@example.com"
-          content_type: text/html
-          body: |
-            <p>Hey,</p>
-            <p>You can download the vulnerability report from here:</p>
-            <p><a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">Link</a></p>
+ 
