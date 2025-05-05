@@ -42,4 +42,5 @@ jobs:
         run: |
             echo "Last modified:"
             stat -c '%y'  ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
-
+            echo "Current system date:"
+            date +"%Y-%m-%d %H:%M:%S"
