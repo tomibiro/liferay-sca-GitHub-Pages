@@ -18,6 +18,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+      - name: clone Liferay portal
+        run: git clone https://github.com/liferay/liferay-portal.git
       - name: Ant telepítése
         run: |
           sudo apt-get update
