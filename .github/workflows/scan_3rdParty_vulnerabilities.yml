@@ -18,11 +18,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: clone Liferay-sca-packages
-        run: git clone https://github.com/lr-whitehat/liferay-sca-packages.git
-      - name: clone Liferay portal
-        run: git clone https://github.com/liferay/liferay-portal.git
-      - name: Ant telepítése
+      - name: Checkout Liferay portal repo
+        uses: actions/checkout@v3
+        with:
+          repository: liferay/liferay-portal
+          token: ${{ secrets.LIFERAY_PAT }}
+          path: liferay-portal
+      - name: Checkout sca-packages repo
+        uses: actions/checkout@v3
+        with:
+          repository: lr-whitehat/liferay-sca-packages
+          token: ${{ secrets.LIFERAY_PAT }}
+          path: liferay-sca-packages
+      - name: Ant setup
         run: |
           sudo apt-get update
           sudo apt-get install -y ant
