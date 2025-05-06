@@ -8,7 +8,6 @@ on:
 jobs:
   security-scan:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -44,24 +43,6 @@ jobs:
             stat -c '%y'  ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
             echo "Current system date:"
             date +"%Y-%m-%d %H:%M:%S"
-      - name: Upload generated HTML file
-        uses: actions/upload-artifact@v4
-        with:
-          name: report
-          path: liferay-sca-packages/master/sonatype-oss-index-report.html
-      - name: Send email with report
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.SMTP_USER }}
-          password: ${{ secrets.SMTP_PASS }}
-          subject: Liferay SCA Report
-          body: |
-            Please find the the report attached from liferay-sca tool
-          to: tamas.biro@liferay.com
-          from: ${{ secrets.SMTP_USER }}
-          attachments: liferay-sca-packages/master/sonatype-oss-index-report.html
       - name: Upload report as GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -72,7 +53,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
