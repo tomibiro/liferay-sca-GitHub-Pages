@@ -5,6 +5,11 @@ on:
     - cron: '0 6 * * 1' # Mondays at 06:00 UTC
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   security-scan:
     runs-on: ubuntu-latest
