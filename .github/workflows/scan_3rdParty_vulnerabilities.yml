@@ -18,29 +18,48 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-
+      - name: Checkout Liferay portal repo
+        uses: actions/checkout@v3
+        with:
+          repository: liferay/liferay-portal
+          token: ${{ secrets.LIFERAY_PAT }}
+          path: liferay-portal
+      - name: Checkout sca-packages repo
+        uses: actions/checkout@v3
+        with:
+          repository: lr-whitehat/liferay-sca-packages
+          token: ${{ secrets.LIFERAY_PAT }}
+          path: liferay-sca-packages
+      - name: Ant setup
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ant
       - name: Run vulnerability scanner
         run: |
           ant compile
           ant run
-      - name: Upload report artifact
+      - name: Show HTML file last modified date
+        run: |
+            echo "Last modified:"
+            stat -c '%y'  ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
+            echo "Current system date:"
+            date +"%Y-%m-%d %H:%M:%S"
+      - name: Upload generated HTML file
         uses: actions/upload-artifact@v4
         with:
-          name: vuln-report
-          path: C:/Liferay/liferay-sca-packages/master/sonatype-oss-index-report.html
-
+          name: report
+          path: liferay-sca-packages/master/sonatype-oss-index-report.html
       - name: Send email with report
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.yourmail.com
+          server_address: smtp.gmail.com
           server_port: 465
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "Weekly 3rd party vulnerability report"
-          to: you@example.com
-          from: "scanner@example.com"
-          content_type: text/html
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: Liferay SCA Report
           body: |
-            <p>Hey,</p>
-            <p>You can download the vulnerability report from here:</p>
-            <p><a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">Link</a></p>
+            Please find the the report attached from liferay-sca tool
+          to: tamas.biro@liferay.com
+          from: ${{ secrets.SMTP_USER }}
+          attachments: liferay-sca-packages/master/sonatype-oss-index-report.html
+
