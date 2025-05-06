@@ -2,8 +2,8 @@ name: Weekly Security Scan
 
 on:
   schedule:
-    - cron: '0 6 * * 1' # Schedule on Mondays at 06:00 (UTC)
-  workflow_dispatch:     # Manual run?
+    - cron: '0 6 * * 1' # Mondays at 06:00 UTC
+  workflow_dispatch:
 
 jobs:
   security-scan:
@@ -17,42 +17,50 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
       - name: Checkout Liferay portal repo
         uses: actions/checkout@v3
         with:
           repository: liferay/liferay-portal
           token: ${{ secrets.LIFERAY_PAT }}
           path: liferay-portal
+
       - name: Checkout sca-packages repo
         uses: actions/checkout@v3
         with:
           repository: lr-whitehat/liferay-sca-packages
           token: ${{ secrets.LIFERAY_PAT }}
           path: liferay-sca-packages
+
       - name: Ant setup
         run: |
           sudo apt-get update
           sudo apt-get install -y ant
+
       - name: Run vulnerability scanner
         run: |
           ant compile
           ant run
+
       - name: Show HTML file last modified date
         run: |
-            echo "Last modified:"
-            stat -c '%y'  ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
-            echo "Current system date:"
-            date +"%Y-%m-%d %H:%M:%S"
+          echo "Last modified:"
+          stat -c '%y'  ${GITHUB_WORKSPACE}/liferay-sca-packages/master/sonatype-oss-index-report.html
+          echo "Current system date:"
+          date +"%Y-%m-%d %H:%M:%S"
+
       - name: Upload report as GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: liferay-sca-packages/master/
+
   deploy:
     needs: security-scan
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
