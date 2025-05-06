@@ -1,55 +1,43 @@
-# liferay-sca
+# liferay-sca Github Actions
 
-## Configuration
+## The goal
 
-Check out the `liferay-sca-packages` repository to a local directory.
+This tool is a forked github repository and can automatically run with Github Actions scheduled on every Monday, but can be run manually also. When running it clones the required git repositories to a temporary Ubuntu server enviroment.
+Also setup java17 and install 'ant' then run the forked liferay-sca tool according to the modified config-ext-properties.
 
-Take a look at `config.properties` and create a `config-ext.properties` with 
-your custom values. In particular, you'll probably need to take change the 
-following properties:
-* `****.src.code`: The path to the source code to scan
-* `****.dependabot.package.dir`: The path the `liferay-sca-packages` repository 
-and where you want to save the scan's output.
+## How to setup
 
-The scan additional projects, add the following properties:
+Check the yml file that contains the automatic steps: https://github.com/tomibiro/liferay-sca-for-Github-Actions/blob/yml_file_update/.github/workflows/scan_3rdParty_vulnerabilities.yml
 
-    ****.src.code=
-    ****.dependabot.package.dir=
-    ****.git.pack.ref=
-    ****.ignored.folders=
+Some line with details:
+   - schedule: as a cron job it starts on every Monday.
+   - steps:
+      - name: the name of the steps (free form)
+      - uses: uses the built-in Action
+      - with: parameters
 
-where `****` is a prefix of your choice. Add this prefix to the `projects` property.
+   it is possible to add more steps.
 
-The Sonatype OSS Index service is heavily rate-limiting anonymous requests. To avoid 
-this, register for an account at https://ossindex.sonatype.org and set the email 
-address and API token associated with your account in the following properties:
-
-    sonatype.oss.index.username=
-    sonatype.oss.index.api.token=
 
 ## To Run
 
-Before running the program, or after making any changes, you must compile it:
+1, Click on the Actions in the github repository: https://github.com/tomibiro/liferay-sca-for-Github-Actions/actions
+   You can see the already done runs here.
 
-    ant compile
+2, Click on the Workflows: https://github.com/tomibiro/liferay-sca-for-Github-Actions/actions/workflows/scan_3rdParty_vulnerabilities.yml
 
-Then run the program: 
+3, To start a new (manual run) workflow, click on 'run workflow'. Choose the branch and run it.
 
-    ant run
+4, A new Workflow has started. Sometimes the page does not refresh so you need to manually refresh the page and check the newly appeared one.
 
-or to scan a single project:
+5, Click on the new Workflow (Weekly Security Scan)
 
-    ant run -Dproject=<project>
+6, Click on the Run name: 'Security-scan'. You will see the running steps that are involved in the yml file.
 
+7, It is possible to click into the steps for further information (logs, details)
 
-where `<project>` is the prefix of your project from the configuration file.
+## Future developement possibilities
 
-After the program runs, the scan's result will be saved to your local 
-`liferay-sca-packages` repository. Commit these files and push the changes to 
-GitHub. On GitHub, the SCA results will be available at 
-https://github.com/lr-whitehat/liferay-sca-packages/security/dependabot
-
-
-> [!WARNING]
-> The Sonatype OSS scan hasn't been used in a long time because it was 
-producing a large number of false positives. It may or may not work currently.
+- Liferay gmail does not allow to send emails with API codes by GitHub Actions, so I used my personal account
+  
+- This repository is a forked private so I can not use the Github Pages for publishing the report on the web
