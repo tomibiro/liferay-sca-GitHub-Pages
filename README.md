@@ -1,4 +1,4 @@
-# liferay-sca Github Actions
+# liferay-sca Github Pages
 
 ## The goal
 
@@ -36,8 +36,6 @@ Some line with details:
 
 7, It is possible to click into the steps for further information (logs, details)
 
-## Future developement possibilities
+## Github Pages
 
-- Liferay gmail does not allow to send emails with API codes by GitHub Actions, so I used my personal account
-  
-- This repository is a forked private so I can not use the Github Pages for publishing the report on the web
+The created report is found here: https://tomibiro.github.io/liferay-sca-GitHub-Pages/sonatype-oss-index-report.html
